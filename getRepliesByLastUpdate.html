@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+
+    <script type="text/javascript" src="http://tson.com/steemjs/steem.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+
+    <script>
+        var localDiscussion = null;
+        var index = -1;
+
+        $(document).ready(function () {
+			var startAuthor = 'rileyge';
+			var startPermlink = 're-wilhb81-re-rileyge-6mznks-20180128t020833699z';
+			var limit = 10;
+
+			steem.api.setWebSocket("wss://steemd.steemitstage.com");
+			steem.api.getRepliesByLastUpdate(startAuthor, startPermlink, limit, function(err, result) {
+				if(!err)
+				{
+					//$("#resultsTable").empty();
+					for (i = 0; i < result.length; i++) {
+						//console.log(result[i]);
+						var commentAuthor = result[i].author;							
+						$("#resultsTable").append(commentAuthor);
+						$("#resultsTable").append(" says: ");
+						var commentContent = result[i].body;
+						$("#resultsTable").append(commentContent);
+						$("#resultsTable").append("<br />");
+					}
+				}
+				//console.log(err, result);
+			});	
+		});
+    </script>
+</head>
+<body>
+	<br/>
+	<div id="resultsTable">
+	</div>
+</body>
+</html>
+
